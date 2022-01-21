@@ -1,1 +1,1 @@
-# python3-cookbook exercise
+# python3-cookbook note

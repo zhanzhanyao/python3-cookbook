@@ -60,7 +60,6 @@ def learn_heap():
     expensive = heapq.nlargest(3, portfolio, key=lambda s: s["price"])
     cheap = heapq.nsmallest(3, portfolio, key=lambda s: s["price"])
 
-
     # Notice:
     # 1. heap is used in N is much less than than the length of input
     # 2. N is near the length of input, use sorted(items)[:N]
@@ -101,13 +100,14 @@ def learn_heap_1():
 def create_multdict():
     """One key corresponds to multiple values"""
     from collections import defaultdict
+
     d = defaultdict(list)
     d["a"].append(1)
     d["b"].append(4)
 
     s = {}
-    s.setdefault("a",[])
-    s.setdefault("b",[])
+    s.setdefault("a", [])
+    s.setdefault("b", [])
 
     pairs = ("a", 1)
     d = {}
@@ -116,7 +116,7 @@ def create_multdict():
             d[key] = value
         d[key].append(value)
 
-    d=defaultdict(list)
+    d = defaultdict(list)
     for key, value in pairs:
         d[key].append(value)
 
@@ -131,8 +131,18 @@ def create_ordereddict():
     d["spam"] = 3
     d["grok"] = 4
     for key in d:
-        print(key,d[key])
+        print(key, d[key])
 
     # Using OrderedDict() to control JSON sequence
     import json
+
     json.dump(d)
+
+
+def operate_dict():
+    prices = {"ACME": 45.23, "AAPL": 612.78, "IBM": 205.55, "HPQ": 37.20, "FB": 10.75}
+    min_price = min(zip(prices.values(),prices.keys()))
+    max_price = max(zip(prices.values(),prices.keys()))
+    price_sorted = sorted(zip(prices.values(),prices.keys()))
+    # notice: iterator created by zip only can be operated one time
+

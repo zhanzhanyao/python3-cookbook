@@ -48,7 +48,7 @@ def learn_heap():
     largest_nums = heapq.nlargest(3, nums)
     smallest_nums = heapq.nsmallest(3, nums)
 
-    """Search largest or smallest N elements for a composite data structure"""
+    # Search largest or smallest N elements for a composite data structure
     portfolio = [
         {"name": "IBM", "shares": 100, "price": 91.1},
         {"name": "AAPL", "shares": 50, "price": 543.22},
@@ -60,12 +60,11 @@ def learn_heap():
     expensive = heapq.nlargest(3, portfolio, key=lambda s: s["price"])
     cheap = heapq.nsmallest(3, portfolio, key=lambda s: s["price"])
 
-    """
-    Notice:
-    1. heap is used in N is much less than than the length of input
-    2. N is near the length of input, use sorted(items)[:N]
-    3. Search one largest/smallest using max(),min()
-    """
+
+    # Notice:
+    # 1. heap is used in N is much less than than the length of input
+    # 2. N is near the length of input, use sorted(items)[:N]
+    # 3. Search one largest/smallest using max(),min()
 
 
 def learn_heap_1():
@@ -122,4 +121,18 @@ def create_multdict():
         d[key].append(value)
 
 
-create_multdict()
+def create_ordereddict():
+    from collections import OrderedDict
+
+    d = OrderedDict()
+    # memory costs is more than general dict
+    d["foo"] = 1
+    d["bar"] = 2
+    d["spam"] = 3
+    d["grok"] = 4
+    for key in d:
+        print(key,d[key])
+
+    # Using OrderedDict() to control JSON sequence
+    import json
+    json.dump(d)

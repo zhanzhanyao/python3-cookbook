@@ -1,6 +1,3 @@
-from collections import deque
-
-
 def separate():
     """Separate the sequence(any iterable object) into individual variables"""
     data = ["ACME", 50, 91.1, (2012, 12, 21)]
@@ -19,6 +16,8 @@ def separate():
 
 def learn_deque():
     """Reserve last several elements"""
+    from collections import deque
+
     def search(lines, pattern, history=5):
         previous_lines = deque(maxlen=history)
         for line in lines:
@@ -35,7 +34,35 @@ def learn_deque():
             print("-" * 20)
 
     # Use of deque
-    q=deque()
-    q.extendleft([1,2,3,4])
+    q = deque()
+    q.extendleft([1, 2, 3, 4])
     q.appendleft(0)
     q.popleft()
+
+
+def learn_heap():
+    """Search the largest or smallest N elements"""
+    import heapq
+
+    nums = [1, 8, 2, 23, 7, -4, 18, 23, 42, 37, 2]
+    largest_nums = heapq.nlargest(3, nums)
+    smallest_nums = heapq.nsmallest(3, nums)
+
+    """Search largest or smallest N elements for a composite data structure"""
+    portfolio = [
+        {"name": "IBM", "shares": 100, "price": 91.1},
+        {"name": "AAPL", "shares": 50, "price": 543.22},
+        {"name": "FB", "shares": 200, "price": 21.09},
+        {"name": "HPQ", "shares": 35, "price": 31.75},
+        {"name": "YHOO", "shares": 45, "price": 16.35},
+        {"name": "ACME", "shares": 75, "price": 115.65},
+    ]
+    expensive = heapq.nlargest(3, portfolio, key=lambda s: s["price"])
+    cheap = heapq.nsmallest(3, portfolio, key=lambda s: s["price"])
+
+    """
+    Notice:
+    1. heap is used in N is much less than than the length of input
+    2. N is near the length of input, use sorted(items)[:N]
+    3. Search one largest/smallest using max(),min()
+    """

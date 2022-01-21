@@ -141,8 +141,21 @@ def create_ordereddict():
 
 def operate_dict():
     prices = {"ACME": 45.23, "AAPL": 612.78, "IBM": 205.55, "HPQ": 37.20, "FB": 10.75}
-    min_price = min(zip(prices.values(),prices.keys()))
-    max_price = max(zip(prices.values(),prices.keys()))
-    price_sorted = sorted(zip(prices.values(),prices.keys()))
+    min_price = min(zip(prices.values(), prices.keys()))
+    max_price = max(zip(prices.values(), prices.keys()))
+    price_sorted = sorted(zip(prices.values(), prices.keys()))
     # notice: iterator created by zip only can be operated one time
 
+
+def common_in_dict():
+    a = {"x": 1, "y": 2, "z": 3}
+    b = {"w": 10, "x": 11, "y": 2}
+
+    # common keys
+    a.keys() & b.keys()
+    # keys in a not in b
+    a.keys() - b.keys()
+    # common (key, value)
+    a.items() & b.items()
+    # pairs' key are not {"z","w"}
+    c = {key: a[key] for key in a.keys() - {"z", "w"}}

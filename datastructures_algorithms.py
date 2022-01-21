@@ -97,3 +97,29 @@ def learn_heap_1():
     q.push(Item("spam"), 4)
     q.push(Item("grok"), 1)
     q.pop()
+
+
+def create_multdict():
+    """One key corresponds to multiple values"""
+    from collections import defaultdict
+    d = defaultdict(list)
+    d["a"].append(1)
+    d["b"].append(4)
+
+    s = {}
+    s.setdefault("a",[])
+    s.setdefault("b",[])
+
+    pairs = ("a", 1)
+    d = {}
+    for key, value in pairs:
+        if key not in d:
+            d[key] = value
+        d[key].append(value)
+
+    d=defaultdict(list)
+    for key, value in pairs:
+        d[key].append(value)
+
+
+create_multdict()

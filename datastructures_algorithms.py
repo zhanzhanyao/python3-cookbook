@@ -196,3 +196,16 @@ def fab(max_n):
         # yield create a generator to avoid costs in memory, batter than store in list
         a, b = b, a + b
         n += 1
+
+
+def learn_slice():
+    record = "....................100.......513.25.........."
+    SHARES = slice(20, 23)
+    PRICES = slice(31, 37)
+    cost = float(record[SHARES]) * float(record[PRICES])
+
+    a = slice(5, 50, 2)
+    s = "GoodMorning"
+    # Avoiding IndexError
+    for i in range(a.indices(len(s))):
+        print(s[i])

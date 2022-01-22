@@ -209,3 +209,33 @@ def learn_slice():
     # Avoiding IndexError
     for i in range(a.indices(len(s))):
         print(s[i])
+
+
+def learn_counter():
+    words = [
+        "look",
+        "into",
+        "my",
+        "eyes",
+        "look",
+    ]
+    from collections import Counter
+
+    word_counts = Counter(words)
+    top = word_counts.most_common(3)
+
+
+def operate_listdict():
+    rows = [
+        {"fname": "Brian", "lname": "Jones", "uid": 1003},
+        {"fname": "David", "lname": "Beazley", "uid": 1002},
+        {"fname": "John", "lname": "Cleese", "uid": 1001},
+        {"fname": "Big", "lname": "Jones", "uid": 1004},
+    ]
+    from operator import itemgetter
+
+    sorted(rows, key=lambda a: a["uid"])
+    sorted(rows, key=itemgetter("uid"))  # faster
+
+    min(rows, key=itemgetter("uid"))
+    max(rows, key=itemgetter("uid"))

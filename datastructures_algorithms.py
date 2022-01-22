@@ -159,3 +159,40 @@ def common_in_dict():
     a.items() & b.items()
     # pairs' key are not {"z","w"}
     c = {key: a[key] for key in a.keys() - {"z", "w"}}
+
+
+def deldupe():
+    """Delete duplicate and keep original order in sequence"""
+
+    def deldupe_1(items):
+        seen = set()
+        for item in items:
+            if item not in seen:
+                yield item
+                seen.add(item)
+
+    a = [1, 5, 2, 1, 9, 1, 5, 10]
+    deldupe_1(a)  # [1, 5, 2, 9, 10]
+
+    def deldupe_2(items, key=None):
+        seen = set()
+        for item in items:
+            val = item if key is None else key(item)
+            if val not in seen:
+                yield item
+                seen.add(val)
+
+    a = [{"x": 1, "y": 2}, {"x": 1, "y": 3}, {"x": 1, "y": 2}, {"x": 2, "y": 4}]
+    deldupe_2(
+        a, key=lambda b: (b["x"], b["y"])
+    )  # [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
+    deldupe_2(a, key=lambda b: b["x"])  # [{'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
+
+
+def fab(max_n):
+    n, a, b = 0, 0, 1
+    while n < max_n:
+        yield b
+        # yield create a generator to avoid costs in memory, batter than store in list
+        a, b = b, a + b
+        n += 1

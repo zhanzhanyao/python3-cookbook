@@ -239,3 +239,24 @@ def operate_listdict():
 
     min(rows, key=itemgetter("uid"))
     max(rows, key=itemgetter("uid"))
+
+
+def sort_notcompare():
+    """Sort object that doesn't support comparison"""
+
+    class User:
+        def __init__(self, user_id):
+            self.user_id = user_id
+
+        def __repr__(self):
+            return "User({})".format(self.user_id)
+
+    def sort_nocompare():
+        users = [User(23), User(10), User(2)]
+        print(sorted(users, key=lambda a: a.user_id))
+
+    def sort_nocompare_1():
+        users = [User(23), User(10), User(2)]
+        from operator import attrgetter
+
+        sorted(users, key=attrgetter("user_id"))

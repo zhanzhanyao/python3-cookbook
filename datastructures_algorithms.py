@@ -341,7 +341,7 @@ def learn_listfilter():
     )  # ['5800 E 58TH', '1060 W ADDISON', '4801 N BROADWAY']
 
 
-def learn_dicefilter():
+def learn_dictfilter():
     """Select desired values from a dict"""
     prices = {"ACME": 45.23, "AAPL": 612.78, "IBM": 205.55, "HPQ": 37.20, "FB": 10.75}
     p1 = {key: value for key, value in prices.items() if value > 200}

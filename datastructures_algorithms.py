@@ -407,3 +407,13 @@ def learn_generator():
     s = sum(
         [x * x for x in nums]
     )  # need to create a extra list, if list is very large, will cost many memories
+
+def learn_chainmap():
+    """Combine more than one dict"""
+    a = {'x': 1, 'z': 3 }
+    b = {'y': 2, 'z': 4 }
+    from collections import ChainMap
+    c = ChainMap(a, b)  # if add value in a or b, value also be added into c
+
+    merge = dict(a)
+    merge.update(b)  # need to create a extra dict merge, and if add a new value in a,b, it will not be added into merge

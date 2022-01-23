@@ -295,8 +295,8 @@ def group_dict():
     for i in rows_by_date["07/01/2012"]:
         print(i)
 
-def learn_filter():
-    """Select desired values from a sequence"""
+def learn_listfilter():
+    """Select desired values from a list"""
     mylist = [1, 4, -5, 10, -7, 2, 3, -1]
     newlist = [n for n in mylist if n > 0]  # large memory cost
     newgenrt = (n for n in mylist if n > 0)  # small memory cost
@@ -335,3 +335,16 @@ def learn_filter():
     from itertools import compress
     mores = [n>5 for n in counts]  #[False, False, True, False, False, True, True, False]
     list(compress(addresses,mores))  #['5800 E 58TH', '1060 W ADDISON', '4801 N BROADWAY']
+
+
+def learn_dicefilter():
+    """Select desired values from a list"""
+    prices = {
+        'ACME': 45.23,
+        'AAPL': 612.78,
+        'IBM': 205.55,
+        'HPQ': 37.20,
+        'FB': 10.75
+    }
+    p1 = {key: value for key, value in prices.items() if value > 200}
+    p2 = {key: value for key, value in prices.items() if key == "AAPL"}

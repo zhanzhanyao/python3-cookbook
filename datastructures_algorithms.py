@@ -276,20 +276,62 @@ def group_dict():
     # Group and access the sequence
     from itertools import groupby
     from operator import itemgetter
+
     # sort by desired field first because groupby optration work on continuous records
     # rows = sorted(rows,key=itemgetter("date"))
     rows.sort(key=itemgetter("date"))
     # Iterate in groups
-    for date,items in groupby(rows,key=itemgetter("date")):
+    for date, items in groupby(rows, key=itemgetter("date")):
         print(date)
         for i in items:
             print(i)
 
     from collections import defaultdict
+
     rows_by_date = defaultdict()
     for row in rows:
         rows_by_date[row["date"]].append(row)
 
     for i in rows_by_date["07/01/2012"]:
         print(i)
-    
+
+def learn_filter():
+    """Select desired values from a sequence"""
+    mylist = [1, 4, -5, 10, -7, 2, 3, -1]
+    newlist = [n for n in mylist if n > 0]  # large memory cost
+    newgenrt = (n for n in mylist if n > 0)  # small memory cost
+    for i in newgenrt:
+        print(i)
+
+    # complex filter
+    values = ["1", "2", "-3", "-", "4", "N/A", "5"]
+
+
+    def is_int(val):
+        try:
+            x = int(val)
+            return True
+        except ValueError:
+            return False
+
+
+    ivals = list(filter(is_int, values))
+    print(ivals)
+
+    # Filter and replace by desired value
+    new_list = [n if n > 0 else 0 for n in mylist]
+
+    addresses = [
+        "5412 N CLARK",
+        "5148 N CLARK",
+        "5800 E 58TH",
+        "2122 N CLARK",
+        "5645 N RAVENSWOOD",
+        "1060 W ADDISON",
+        "4801 N BROADWAY",
+        "1039 W GRANVILLE",
+    ]
+    counts = [0, 3, 10, 4, 1, 7, 6, 1]
+    from itertools import compress
+    mores = [n>5 for n in counts]  #[False, False, True, False, False, True, True, False]
+    list(compress(addresses,mores))  #['5800 E 58TH', '1060 W ADDISON', '4801 N BROADWAY']

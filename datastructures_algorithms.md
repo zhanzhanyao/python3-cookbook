@@ -1,4 +1,4 @@
-#### Data  Structures and algorithms
+#### Data  Structures and Algorithms
 Separate the sequence(any iterable object) into individual variables  
 
     name, shares, price, date = data  

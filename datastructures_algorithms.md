@@ -69,13 +69,13 @@ Usage of counter
     word_counts = Counter(words)
     top = word_counts.most_common(3)
 
-Sort object can not be compared
+Sort objects that can not be compared
 
     from operator import attrgetter
 
     sorted(users, key=attrgetter("user_id"))
 
-Name the value of tuple
+Name the value of the tuple
 
     from collections import namedtuple
 

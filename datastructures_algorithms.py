@@ -295,6 +295,7 @@ def group_dict():
     for i in rows_by_date["07/01/2012"]:
         print(i)
 
+
 def learn_listfilter():
     """Select desired values from a list"""
     mylist = [1, 4, -5, 10, -7, 2, 3, -1]
@@ -306,14 +307,12 @@ def learn_listfilter():
     # complex filter
     values = ["1", "2", "-3", "-", "4", "N/A", "5"]
 
-
     def is_int(val):
         try:
             x = int(val)
             return True
         except ValueError:
             return False
-
 
     ivals = list(filter(is_int, values))
     print(ivals)
@@ -333,18 +332,42 @@ def learn_listfilter():
     ]
     counts = [0, 3, 10, 4, 1, 7, 6, 1]
     from itertools import compress
-    mores = [n>5 for n in counts]  #[False, False, True, False, False, True, True, False]
-    list(compress(addresses,mores))  #['5800 E 58TH', '1060 W ADDISON', '4801 N BROADWAY']
+
+    mores = [
+        n > 5 for n in counts
+    ]  # [False, False, True, False, False, True, True, False]
+    list(
+        compress(addresses, mores)
+    )  # ['5800 E 58TH', '1060 W ADDISON', '4801 N BROADWAY']
 
 
 def learn_dicefilter():
-    """Select desired values from a list"""
-    prices = {
-        'ACME': 45.23,
-        'AAPL': 612.78,
-        'IBM': 205.55,
-        'HPQ': 37.20,
-        'FB': 10.75
-    }
+    """Select desired values from a dict"""
+    prices = {"ACME": 45.23, "AAPL": 612.78, "IBM": 205.55, "HPQ": 37.20, "FB": 10.75}
     p1 = {key: value for key, value in prices.items() if value > 200}
     p2 = {key: value for key, value in prices.items() if key == "AAPL"}
+
+
+def learn_namedtup():
+    from collections import namedtuple
+    Subscriber = namedtuple("Subscriber", ["addr", "joined"])
+    sub = Subscriber("940105829@qq.com", "2021/12/12")
+    sub.addr  # 940105829@qq.com
+    sub.joined  # 2021/12/12
+
+    Stock = namedtuple("Stock", ["name", "shares", "price"])
+    # Avoid operate elements by subscript
+    def compute_cost(records):
+        total = 0.0
+        for rec in records:
+            s = Stock(*rec)
+            total += s.shares * s.price
+            return total
+
+    # Replace Dict to reduce memory costs
+    Stock = namedtuple("Stock", ["name", "shares", "price","date","time"])
+    # Create a prototype instance
+    stock_prototype = Stock("",0,0.0,None,None)
+    a = {'name': 'ACME', 'shares': 100, 'price': 123.45}
+    s = stock_prototype._replace(**a)
+    print(s)

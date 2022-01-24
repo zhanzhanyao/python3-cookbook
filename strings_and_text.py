@@ -113,17 +113,19 @@ def replace_text():
 
     #
     from calendar import month_abbr
+
     def change_date(m):
         mon_name = month_abbr[int(m.group(1))]
         return "{}{}{}".format(m.group(2, mon_name, m.group(3)))
 
     datepat.sub(change_date, text)
 
+
 def search_insensitive():
     """Text searching and replacing insensitive"""
-    text = 'UPPER PYTHON, lower python, Mixed Python'
+    text = "UPPER PYTHON, lower python, Mixed Python"
     re.findall(r"python", text, flags=re.IGNORECASE)  # ['PYTHON', 'python', 'Python']
-    re.sub("python","snake",tags=re.IGNORECASE)
+    re.sub("python", "snake", tags=re.IGNORECASE)
 
     # replace and initial case keep consistent
     def matchcase(word):
@@ -137,9 +139,11 @@ def search_insensitive():
                 return word.capitalize()
             else:
                 return word
+
         return replace
 
     re.sub("python", matchcase("snake"), text, tags=re.IGNORECASE)
+
 
 def string_strip():
     """Delete unwanted characters"""
@@ -149,14 +153,57 @@ def string_strip():
     s.lstrip()  # "hello world \n"
     s.rstrip()  # " hello world"
     # Characters stripping
-    t = '-----hello====='
+    t = "-----hello====="
     t.strip("-=")  # "hello"
     # striping middle whitespace
     r = "hello    world"
     import re
-    r = re.sub(r"\s+"," ",r)  # hello world
+
+    r = re.sub(r"\s+", " ", r)  # hello world
 
 
+def combine_string():
+    """Combine and concatenate strings"""
+    parts = ["Is", "Chicago", "Not", "Chicago?"]
+    # strings in a sequence or iterator
+    " ".join(parts)
+    ",".join(parts)
 
+    # Combine less strings
+    a = "wo shi"
+    b = "xiao gou"
+    a + " " + b
 
+    # conbine 2 strings
+    a = "xiao" "Gou"  # XiaoGou
 
+    # for large sequences
+    data = ["hi", "dog", 3]
+    ",".join(n for n in data)
+
+    # avoid unnecessary concatenation
+    print(a + ":" + b)  # ugly
+    print(":".join(a, b))  # ugly
+    print(a, b, sep=":")
+
+    def combine(source, maxsixe):
+        parts = []
+        size = 0
+        for part in source:
+            parts.append(part)
+            size += len(part)
+            if size > maxsixe:
+                yield " ".join(parts)
+                parts = []
+                size = 0
+        yield " ".join(parts)
+
+    def sample():
+        yield "Is"
+        yield "Chicago"
+        yield "Not"
+        yield "Chicago?"
+
+    with open("filename", "w") as f:
+        for part in combine(sample(), 32768):
+            f.write(part)

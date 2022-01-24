@@ -140,3 +140,23 @@ def search_insensitive():
         return replace
 
     re.sub("python", matchcase("snake"), text, tags=re.IGNORECASE)
+
+def string_strip():
+    """Delete unwanted characters"""
+    # Whitespace stripping
+    s = " hello world \n"
+    s.strip()  # "hello world"
+    s.lstrip()  # "hello world \n"
+    s.rstrip()  # " hello world"
+    # Characters stripping
+    t = '-----hello====='
+    t.strip("-=")  # "hello"
+    # striping middle whitespace
+    r = "hello    world"
+    import re
+    r = re.sub(r"\s+"," ",r)  # hello world
+
+
+
+
+

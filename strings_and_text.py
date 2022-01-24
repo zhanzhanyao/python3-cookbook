@@ -33,7 +33,7 @@ def match_string():
         pass
 
 
-def match_string():
+def match_string_1():
     """match strings with shell wildcard"""
     from fnmatch import fnmatch, fnmatchcase
 
@@ -47,3 +47,37 @@ def match_string():
 
     fnmatch("foo.txt", "*.TXT")  # on mac-->False, on windows-->True
     fnmatchcase("foo.txt", "*.TXT")  # False
+
+
+def match_string_2():
+    """Summary of string searching and matching"""
+    # simple matching
+    text = "yeah, but no, but yeah, but no, but yeah"
+    text == "yeah, but no, but yeah"  # false
+    text.endswith("yeah")  # true
+    text.startswith("yeah")  # true
+    text.find("no")  # 10
+
+    # complex matching
+    text1 = "11/27/2012"
+    import re
+
+    if re.Match(r"\d+/\d+/\d+", text1):
+        pass
+
+    # pattern
+    datepat = re.compile(r"\d+/\d+/\d+")
+    if datepat.match(text1):
+        pass
+
+    # find first one/find all
+    text = "Today is 11/27/2012. PyCon starts 3/13/2013."
+    datepat.findall(text)  # ['11/27/2012', '3/13/2013']
+
+    # group the result
+    datepat = re.compile(r"(\d+)/(\d+)/(\d+)")
+    m = datepat.match(text1)
+    m.groups()  # ('11', '27', '2012')
+
+    # return a iterator
+    datepat.finditer(text1)

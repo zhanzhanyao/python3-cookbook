@@ -15,3 +15,18 @@ def split_string():
     values = field[::2]
     delimiters = field[1::2]
     line = "".join(v + d for v, d in zip(values, delimiters))
+
+def match_string():
+    """Match start and end of text"""
+    filename = f"p02_match_text_at_start_end.txt"
+    filename.endswith(".txt")  # True
+    filename.startswith(".txt")  # False
+
+    import os
+
+    filenames = os.listdir(".")  # [ 'Makefile', 'foo.c', 'bar.py', 'spam.c', 'spam.h' ]
+    targetfile = [
+        name for name in filenames if name.endswith((".c", ".h"))
+    ]  # ['foo.c', 'spam.c', 'spam.h'
+    if any(name.endswith(".py") for name in filenames):
+        pass

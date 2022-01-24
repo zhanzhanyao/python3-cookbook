@@ -1,3 +1,6 @@
+import re
+
+
 def split_string():
     """Split a string by multiple delimiters"""
     line = "asdf fjdk; afed, fjek,asdf, foo"
@@ -86,20 +89,27 @@ def match_string_2():
 def replace_text():
     """Text searching and replacing"""
     # simple seaching
-    text = 'yeah, but no, but yeah, but no, but yeah'
-    print(text.replace("yeah","yep"))
+    text = "yeah, but no, but yeah, but no, but yeah"
+    print(text.replace("yeah", "yep"))
 
     # regex searching
-    text = 'Today is 11/27/2012. PyCon starts 3/13/2013.'
+    text = "Today is 11/27/2012. PyCon starts 3/13/2013."
     import re
-    re.sub(r"(\d+)/(\d+)/(\d+)", r"\3-\1-\2", text)  # 'Today is 2012-11-27. PyCon starts 2013-3-13.'
+
+    re.sub(
+        r"(\d+)/(\d+)/(\d+)", r"\3-\1-\2", text
+    )  # 'Today is 2012-11-27. PyCon starts 2013-3-13.'
 
     # pattern
     datepat = re.compile(r"(\d+)/(\d+)/(\d+)")
-    datepat.sub(r"\3-\1-\2",text)  # 'Today is 2012-11-27. PyCon starts 2013-3-13.'
+    datepat.sub(r"\3-\1-\2", text)  # 'Today is 2012-11-27. PyCon starts 2013-3-13.'
 
     # named regex
-    re.sub(r"(?P<month>\d+)/(?P<day>\d+)/(?P<year>\d+)/", r"\g<year>-\g<month>-\g<day>-",text)
+    re.sub(
+        r"(?P<month>\d+)/(?P<day>\d+)/(?P<year>\d+)/",
+        r"\g<year>-\g<month>-\g<day>-",
+        text,
+    )
 
     #
     from calendar import month_abbr
@@ -109,5 +119,24 @@ def replace_text():
 
     datepat.sub(change_date, text)
 
+def search_insensitive():
+    """Text searching and replacing insensitive"""
+    text = 'UPPER PYTHON, lower python, Mixed Python'
+    re.findall(r"python", text, flags=re.IGNORECASE)  # ['PYTHON', 'python', 'Python']
+    re.sub("python","snake",tags=re.IGNORECASE)
 
+    # replace and initial case keep consistent
+    def matchcase(word):
+        def replace(m):
+            text = m.group()
+            if text.isupper():
+                return word.upper()
+            elif text.islower():
+                return word.lower()
+            elif text[0].isupper():
+                return word.capitalize()
+            else:
+                return word
+        return replace
 
+    re.sub("python", matchcase("snake"), text, tags=re.IGNORECASE)

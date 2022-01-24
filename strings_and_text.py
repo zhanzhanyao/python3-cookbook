@@ -207,3 +207,21 @@ def combine_string():
     with open("filename", "w") as f:
         for part in combine(sample(), 32768):
             f.write(part)
+
+
+def var_string():
+    """Interpolate variables in strings"""
+    s = "{name} has {n} messages."
+    s.format(name="xiaoming", n=7)  # 'Guido has 37 messages.'
+
+    name = "xiaoming"
+    n = 7
+    s.format_map(vars())  # 'Guido has 37 messages.'
+
+    class Info:
+        def __init__(self, name, n):
+            self.name = name
+            self.n = n
+
+    a = Info("xiaoming", 7)
+    s.format_map(vars(a))  # 'Guido has 37 messages.'

@@ -16,6 +16,7 @@ def split_string():
     delimiters = field[1::2]
     line = "".join(v + d for v, d in zip(values, delimiters))
 
+
 def match_string():
     """Match start and end of text"""
     filename = f"p02_match_text_at_start_end.txt"
@@ -30,3 +31,19 @@ def match_string():
     ]  # ['foo.c', 'spam.c', 'spam.h'
     if any(name.endswith(".py") for name in filenames):
         pass
+
+
+def match_string():
+    """match strings with shell wildcard"""
+    from fnmatch import fnmatch, fnmatchcase
+
+    fnmatch("foo.txt", "*.txt")  # True
+    fnmatch("foo.txt", "?oo.txt")  # True
+    fnmatch("Data45.txt", "Data[0-9]*.txt")  # True
+    names = ["Dat1.csv", "Dat2.csv", "config.ini", "foo.py"]
+    target = [
+        name for name in names if fnmatch(name, "*.csv")
+    ]  # ['Dat1.csv', 'Dat2.csv']
+
+    fnmatch("foo.txt", "*.TXT")  # on mac-->False, on windows-->True
+    fnmatchcase("foo.txt", "*.TXT")  # False

@@ -36,16 +36,32 @@ def caculate_date():
         "Sunday",
     ]
 
-    def get_previous_byday(dayname,start_date=None):
+    def get_previous_byday(dayname, start_date=None):
         if start_date == None:
             start_date = datetime.now()
         day_num = start_date.weekday()
         day_num_target = weekdays.index(dayname)
-        days_ago = (7 + day_num -day_num_target) % 7
+        days_ago = (7 + day_num - day_num_target) % 7
         if days_ago == 0:
             days_ago = 7
         target_date = start_date - timedelta(days=days_ago)
         return target_date
 
-    get_previous_byday("Sunday", datetime(2021,12,21))
+    get_previous_byday("Sunday", datetime(2021, 10, 29))
 
+
+def convert_date():
+    """convert string to datetime"""
+    from datetime import datetime
+
+    text = "2021-10-29"
+    date = datetime.strptime(text, "%Y-%m-%d")
+    # desired format
+    a = datetime.strftime(datetime.now(), "%A %B %b, %Y")
+    ## for large dataset
+    from datetime import datetime
+
+
+    def parse_ymd(s):
+        year_s, mon_s, day_s = s.split("-")
+        return datetime(int(year_s), int(mon_s), int(day_s))

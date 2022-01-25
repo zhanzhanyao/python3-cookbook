@@ -1,3 +1,6 @@
+import pytz
+
+
 def round_number():
     round(1.23, 1)  # 1.2
     round(1.5, 0)  # 2
@@ -65,3 +68,23 @@ def convert_date():
     def parse_ymd(s):
         year_s, mon_s, day_s = s.split("-")
         return datetime(int(year_s), int(mon_s), int(day_s))
+
+
+def convert_timezone():
+    from datetime import datetime
+    from pytz import timezone
+
+    d = datetime(2012, 12, 21, 9, 30, 0)  # 2012-12-21 09:30:00
+    # Localize the date for Chicago
+    central = timezone("US/Central")
+    local_d = central.localize(d)  # 2013-03-10 01:45:00-06:00
+    utc_d = local_d.astimezone(timezone(pytz.utc))  # 2013-03-10 07:45:00+00:00
+
+
+
+
+
+
+
+
+

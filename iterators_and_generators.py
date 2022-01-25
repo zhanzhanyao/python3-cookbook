@@ -47,7 +47,7 @@ def create_iter():
     for n in frange(1, 10, 2):
         print(n)
 
- 
+
 def implement_iter():
     """implement iterator protocol"""
     class Node:
@@ -81,3 +81,31 @@ def implement_iter():
 
     for ch in root.depth_first():
         print(ch)
+
+
+def iter_reserve():
+    """iterating in reverse"""
+    class Countdown:
+        def __init__(self, start):
+            self.start = start
+
+        # forward iterator
+        def __iter__(self):
+            n = self.start
+            while n > 0:
+                yield n
+                n -= 1
+
+        # reserved iterator
+        def __reversed__(self):
+            n = 1
+            while n <= self.start:
+                yield n
+                n += 1
+
+    for rr in Countdown(30):
+        print(rr)
+
+    for rr in reversed(Countdown(30)):
+        print(rr)
+

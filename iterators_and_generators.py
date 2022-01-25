@@ -47,7 +47,7 @@ def create_iter():
     for n in frange(1, 10, 2):
         print(n)
 
-
+ 
 def implement_iter():
     """implement iterator protocol"""
     class Node:

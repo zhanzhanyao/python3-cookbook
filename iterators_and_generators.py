@@ -200,5 +200,64 @@ def learn_zip():
     ypts = [101, 78, 37, 15, 62, 99]
     for x, y in zip(xpts,ypts):
         print(x,y)
+    from itertools import chain
+    """iterate on items in separate containers"""
+    for x in chain(xpts,ypts):
+        print(x)
+
+def iter_pipeline():
+    """Create data processing pipelines"""
+    import os
+    import fnmatch
+    import gzip
+    import bz2
+    import re
 
 
+    def gen_find(filepat, top):
+        """Find all filenames in a directory tree that match a shell wildcard pattern"""
+        for path, dirlist, filelist in os.walk():
+            for name in fnmatch.filter(filelist,filepat):
+                yield os.path.join(path, name)
+
+
+    def gen_opener(filenames):
+        """
+        Open a sequence of filenames one at a time producing a file object.
+        The file is closed immediately when proceeding to the next iteration.
+        """
+        for filename in filenames:
+            if filename.endwith(".gz"):
+                f = gzip.open(filename,"rt")
+            elif filename.endwith(".bz2"):
+                f =bz2.open(filename,"rt")
+            else:
+                f = open(filename,"rt")
+            yield f
+            f.close()
+
+
+    def gen_concatenate(iterator):
+        """
+        Chain a sequence of iterators together into a single sequence
+        """
+        for it in iterator:
+            yield  from it
+
+
+    def gen_grep(pattern, lines):
+        """
+        Look for a regex pattern in q sequence of lines
+        """
+        pat = re.compile(pattern)
+        for line in lines:
+            if pat.search(line):
+                yield line
+
+    logname = gen_find("access-log", "www")
+    files = gen_opener(logname)
+    lines = gen_concatenate(files)
+    py_lines = gen_grep("(?i)python", lines)
+    bytecolumn = (line.rsplit(None, 1)[1]for line in py_lines)
+    bytes = (int(x) for x in bytecolumn if x != "-")
+    print("Total", sum(bytes))

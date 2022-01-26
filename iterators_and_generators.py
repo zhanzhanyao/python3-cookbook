@@ -50,6 +50,7 @@ def create_iter():
 
 def implement_iter():
     """implement iterator protocol"""
+
     class Node:
         def __init__(self, value):
             self._value = value
@@ -69,7 +70,6 @@ def implement_iter():
             for c in self:
                 yield from c.depth_first()
 
-
     root = Node(0)
     child1 = Node(1)
     child2 = Node(2)
@@ -85,6 +85,7 @@ def implement_iter():
 
 def iter_reserve():
     """iterating in reverse"""
+
     class Countdown:
         def __init__(self, start):
             self.start = start
@@ -109,9 +110,11 @@ def iter_reserve():
     for rr in reversed(Countdown(30)):
         print(rr)
 
+
 def learn_generator():
     """define generator func with extra state"""
     from collections import deque
+
     class linehistory:
         def __init__(self, lines, histlen=3):
             self.lines = lines
@@ -137,3 +140,31 @@ def learn_generator():
     it = iter(lines)  # If do not use for-loop, call iter() first
     next(it)
 
+def iter_tip():
+    """Taking slice of iterator"""
+    def count(n):
+        while True:
+            yield n
+            n += 1
+
+
+    import itertools
+
+    c = count(0)  # c in a generator, can't be sliced
+    for i in itertools.islice(c, 10, 20):
+        print(i)
+
+    """Skip first part of iterable"""
+    from itertools import dropwhile
+
+    with open("/etc/passwd") as f:
+        for line in dropwhile(lambda line: not line.startwith("#"), f):
+            print(line, end="")
+
+
+    """Skip elements with certain location"""
+    from itertools import islice
+
+    items = ["a", "b", "c", "d", 1, 2, 3]
+    for x in islice(items,4,None):
+        print(x)

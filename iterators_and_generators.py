@@ -168,3 +168,31 @@ def iter_tip():
     items = ["a", "b", "c", "d", 1, 2, 3]
     for x in islice(items,4,None):
         print(x)
+
+def learn_enumerate():
+    """iterate over index value pairs of sequence"""
+    my_list = ["a","b","c"]
+    for idx,value in enumerate(my_list, 1):
+        print(idx,value,sep=":")
+
+    def parse_data(filename):
+        with open(filename, "rt") as f:
+            for lineno, line in enumerate(f,1):
+                field = line.split()
+                try:
+                    count = field[1]
+                except ValueError as e:
+                    print("Line {}: parse error:{}".format(lineno, e))
+
+    from collections import defaultdict
+    word_summary = defaultdict(list)
+    with open("file.txt", "r") as f:
+        lines = f.readlines()
+
+    for idx, line in enumerate(lines):
+        words = [w.strip().lower() for w in line.split()]
+        for word in words:
+            word_summary[word].append(idx)
+
+
+

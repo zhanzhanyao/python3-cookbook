@@ -140,13 +140,14 @@ def learn_generator():
     it = iter(lines)  # If do not use for-loop, call iter() first
     next(it)
 
+
 def iter_tip():
     """Taking slice of iterator"""
+
     def count(n):
         while True:
             yield n
             n += 1
-
 
     import itertools
 
@@ -161,23 +162,23 @@ def iter_tip():
         for line in dropwhile(lambda line: not line.startwith("#"), f):
             print(line, end="")
 
-
     """Skip elements with certain location"""
     from itertools import islice
 
     items = ["a", "b", "c", "d", 1, 2, 3]
-    for x in islice(items,4,None):
+    for x in islice(items, 4, None):
         print(x)
+
 
 def learn_enumerate():
     """iterate over index value pairs of sequence"""
-    my_list = ["a","b","c"]
-    for idx,value in enumerate(my_list, 1):
-        print(idx,value,sep=":")
+    my_list = ["a", "b", "c"]
+    for idx, value in enumerate(my_list, 1):
+        print(idx, value, sep=":")
 
     def parse_data(filename):
         with open(filename, "rt") as f:
-            for lineno, line in enumerate(f,1):
+            for lineno, line in enumerate(f, 1):
                 field = line.split()
                 try:
                     count = field[1]
@@ -185,6 +186,7 @@ def learn_enumerate():
                     print("Line {}: parse error:{}".format(lineno, e))
 
     from collections import defaultdict
+
     word_summary = defaultdict(list)
     with open("file.txt", "r") as f:
         lines = f.readlines()
@@ -194,16 +196,19 @@ def learn_enumerate():
         for word in words:
             word_summary[word].append(idx)
 
+
 def learn_zip():
     """iterate over multiple sequences simultaneously"""
     xpts = [1, 5, 4, 2, 10, 7]
     ypts = [101, 78, 37, 15, 62, 99]
-    for x, y in zip(xpts,ypts):
-        print(x,y)
+    for x, y in zip(xpts, ypts):
+        print(x, y)
     from itertools import chain
+
     """iterate on items in separate containers"""
-    for x in chain(xpts,ypts):
+    for x in chain(xpts, ypts):
         print(x)
+
 
 def iter_pipeline():
     """Create data processing pipelines"""
@@ -213,13 +218,11 @@ def iter_pipeline():
     import bz2
     import re
 
-
     def gen_find(filepat, top):
         """Find all filenames in a directory tree that match a shell wildcard pattern"""
         for path, dirlist, filelist in os.walk():
-            for name in fnmatch.filter(filelist,filepat):
+            for name in fnmatch.filter(filelist, filepat):
                 yield os.path.join(path, name)
-
 
     def gen_opener(filenames):
         """
@@ -228,22 +231,20 @@ def iter_pipeline():
         """
         for filename in filenames:
             if filename.endwith(".gz"):
-                f = gzip.open(filename,"rt")
+                f = gzip.open(filename, "rt")
             elif filename.endwith(".bz2"):
-                f =bz2.open(filename,"rt")
+                f = bz2.open(filename, "rt")
             else:
-                f = open(filename,"rt")
+                f = open(filename, "rt")
             yield f
             f.close()
-
 
     def gen_concatenate(iterator):
         """
         Chain a sequence of iterators together into a single sequence
         """
         for it in iterator:
-            yield  from it
-
+            yield from it
 
     def gen_grep(pattern, lines):
         """
@@ -258,6 +259,42 @@ def iter_pipeline():
     files = gen_opener(logname)
     lines = gen_concatenate(files)
     py_lines = gen_grep("(?i)python", lines)
-    bytecolumn = (line.rsplit(None, 1)[1]for line in py_lines)
+    bytecolumn = (line.rsplit(None, 1)[1] for line in py_lines)
     bytes = (int(x) for x in bytecolumn if x != "-")
     print("Total", sum(bytes))
+
+
+def flat_Iter():
+    """flattening nested sequence"""
+    from collections import Iterable
+
+    def flatten(items, ignore_typess=(str, bytes)):
+        for x in items:
+            if isinstance(x, Iterable) and not isinstance(x, ignore_typess):
+                yield from flatten(x)
+            else:
+                yield x
+
+    items = [1, 2, [3, 4, [5, 6], 7], 8]
+    for x in flatten(items):
+        print(x)
+
+
+def replace_while():
+    """replace infinite while loops with iterator"""
+
+    def process_data():
+        pass
+
+    CHUNKSIZE = 8192
+
+    def reader(s):
+        while True:
+            data = s.recv(CHUNKSIZE)
+            if data == b"":
+                break
+            process_data(data)
+
+    def reader2(s):
+        for chunk in iter(lambda: s.recv(CHUNKSIZE), b""):
+            pass

@@ -109,3 +109,31 @@ def iter_reserve():
     for rr in reversed(Countdown(30)):
         print(rr)
 
+def learn_generator():
+    """define generator func with extra state"""
+    from collections import deque
+    class linehistory:
+        def __init__(self, lines, histlen=3):
+            self.lines = lines
+            self.history = deque(maxlen=histlen)
+
+        def __iter__(self):
+            for lineno, line in enumerate(self.lines, 1):
+                self.history.append((lineno, line))
+                yield line
+
+        def clear(self):
+            self.history.clear()
+
+    with open("somefile.txt") as f:
+        lines = linehistory(f)
+        for line in lines:
+            if "python" in line:
+                for lineno, hline in lines.history:
+                    print("{}:{}".format(lineno, hline), end="")
+
+    f = open("somefile.txt")
+    lines = linehistory(f)
+    it = iter(lines)  # If do not use for-loop, call iter() first
+    next(it)
+

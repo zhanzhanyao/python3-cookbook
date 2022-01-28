@@ -33,16 +33,18 @@ def learn_print():
     for i in range(5):
         print(i, end=" ")
 
+
 def read_block():
     """Iterate over fixed sized records"""
     from functools import partial
 
     RECORD_SIZE = 32
     # for binary files
-    with open("somefile.data","rb") as f:
+    with open("somefile.data", "rb") as f:
         records = iter(partial(f.read(), RECORD_SIZE), b"")
         for r in records:
             print(r)
+
 
 def buffer_read():
     """Read binary data into mutable buffer"""
@@ -64,4 +66,33 @@ def buffer_read():
     with open("newsample.bin", "wb") as f:
         f.write(buf)
 
+
+# def memory_mapping():
+#     """Memory mapping binary files"""
+#     import os
+#     import mmap
+#
+#     def memory_map(filename, access=mmap.ACCESS_WRITE):
+#         size = os.path.getsize(filename)
+#         fd = os.open(filename, os.O_RDWR)
+#         return mmap.mmap(fd, size, access=access)
+#
+#     ...
+
+def learn_ospath()
+    """Use the path name to get the file name, directory name, absolute path"""
+    import os.path
+    path = f"/Users/beazley/Data/data.csv"
+    # get the last component of the path
+    os.path.basename(path)
+    # get the directory name
+    os.path.dirname(path)
+    # join path component together
+    os.path.join("tmp","data",os.path.basename(path))
+
+    # expand the user's home directory
+    path = f'~/Data/data.csv'
+    os.path.expanduser(path)
+    # split the file extension
+    os.path.split(path)
 

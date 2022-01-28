@@ -97,3 +97,15 @@ def learn_ospath():
     os.path.expanduser(path)
     # split the file extension
     os.path.split(path)
+
+
+def file_exist():
+    """Check if a file or directory exists"""
+    import os
+    os.path.exists("/etc/passwd")
+    # is a regular file/is a dir/link
+    os.path.isfile("/etc/passwd")
+    # Get the file linked to
+    os.path.relpath('/usr/local/bin/python3')
+    # get metadata/size/time
+    os.path.getsize()

@@ -79,20 +79,21 @@ def buffer_read():
 #
 #     ...
 
-def learn_ospath()
+
+def learn_ospath():
     """Use the path name to get the file name, directory name, absolute path"""
     import os.path
+
     path = f"/Users/beazley/Data/data.csv"
     # get the last component of the path
     os.path.basename(path)
     # get the directory name
     os.path.dirname(path)
     # join path component together
-    os.path.join("tmp","data",os.path.basename(path))
+    os.path.join("tmp", "data", os.path.basename(path))
 
     # expand the user's home directory
-    path = f'~/Data/data.csv'
+    path = f"~/Data/data.csv"
     os.path.expanduser(path)
     # split the file extension
     os.path.split(path)
-

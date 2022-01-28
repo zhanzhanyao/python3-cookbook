@@ -162,4 +162,3 @@ def erial_ports():
     )
     ser.write(b"G1 X50 Y50/n")
     resp = ser.readline()
-    

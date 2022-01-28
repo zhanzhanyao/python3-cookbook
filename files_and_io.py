@@ -102,10 +102,49 @@ def learn_ospath():
 def file_exist():
     """Check if a file or directory exists"""
     import os
+
     os.path.exists("/etc/passwd")
     # is a regular file/is a dir/link
     os.path.isfile("/etc/passwd")
     # Get the file linked to
-    os.path.relpath('/usr/local/bin/python3')
+    os.path.relpath("/usr/local/bin/python3")
     # get metadata/size/time
     os.path.getsize()
+
+def get_filelist():
+    """Get the file list in a directory"""
+    import os
+
+    os.listdir("somedir")
+
+    # filter file list
+    import os.path
+
+    # get all regular files
+    names = [
+        name
+        for name in os.listdir("somedir")
+        if os.path.isfile(os.path.join("somedir", name))
+    ]
+    # get all dirs
+    names = [
+        name
+        for name in os.listdir("somefile")
+        if os.path.isdir(os.path.join("somedie", name))
+    ]
+    pyfiles = [name for name in os.listdir("somedir") if name.endswith(".py")]
+
+    # example of getting a directory listing
+    import os
+    import  os.path
+    import glob
+
+    pyfiles = glob.glob("*.py")
+
+    # get file size and modification datas
+    name_sz_date = [(name, os.path.getsize(name),os.path.getmtime(name)) for name in pyfiles]
+
+    # Alternative: Get file metadata
+    file_metadata = [(name, os.stat(name)) for name in pyfiles]
+    for name, meta in file_metadata:
+        print(name,meta.st_size, meta.st_mtime)

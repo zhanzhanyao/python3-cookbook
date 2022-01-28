@@ -111,6 +111,7 @@ def file_exist():
     # get metadata/size/time
     os.path.getsize()
 
+
 def get_filelist():
     """Get the file list in a directory"""
     import os
@@ -136,15 +137,29 @@ def get_filelist():
 
     # example of getting a directory listing
     import os
-    import  os.path
+    import os.path
     import glob
 
     pyfiles = glob.glob("*.py")
 
     # get file size and modification datas
-    name_sz_date = [(name, os.path.getsize(name),os.path.getmtime(name)) for name in pyfiles]
+    name_sz_date = [
+        (name, os.path.getsize(name), os.path.getmtime(name)) for name in pyfiles
+    ]
 
     # Alternative: Get file metadata
     file_metadata = [(name, os.stat(name)) for name in pyfiles]
     for name, meta in file_metadata:
-        print(name,meta.st_size, meta.st_mtime)
+        print(name, meta.st_size, meta.st_mtime)
+
+
+def erial_ports():
+    """communicating with serial ports"""
+    import serial
+
+    ser = serial.Serial(
+        "/dev/tty.usbmodem641", baudrate=9600, bytesize=8, parity="N", stopbits=1
+    )
+    ser.write(b"G1 X50 Y50/n")
+    resp = ser.readline()
+    

@@ -1,3 +1,6 @@
+import ntpath
+
+
 def wr_csv():
     """Use Python to process data encoded in a variety of ways"""
     # read csv
@@ -77,22 +80,78 @@ def wr_csv():
         f_csv.writerows(rows)
 
 
-# def wr_json():
-import json
-# dict to json
-data = {
-    'name' : 'ACME',
-    'shares' : 100,
-    'price' : 542.23
-}
-json_str = json.dump(data)
-# json to dict
-data = json.loads(json_str)
+def wr_json():
+    import json
 
-# writing JSON data
-with open("data.json","w") as f:
-    json.dump(data,f)
+    # dict to json
+    data = {"name": "ACME", "shares": 100, "price": 542.23}
+    json_str = json.dumps(data)
+    # json to dict
+    data = json.loads(json_str)
 
-# JSON file to data
-with open("data.json","r") as f:
-    data = json.load(f)
+    # writing JSON data
+    with open("data.json", "w") as f:
+        json.dump(data, f)
+
+    # JSON file to data
+    with open("data.json", "r") as f:
+        data = json.load(f)
+
+
+def parse_xml():
+    """Extract data from XML"""
+    from urllib.request import urlopen
+    from xml.etree.ElementTree import parse
+
+    # Download the RSS feed and parse it
+    u = urlopen("http://planet.python.org/rss20.xml")
+    doc = parse(u)
+
+    # Extract and output tags of interest
+    for item in doc.iterfind("channel/item"):
+        title = item.findtext("title")
+        date = item.findtext("date")
+        link = item.findtext("link")
+
+        print(title)
+        print(date)
+        print(link)
+
+
+def parse_huge_xml():
+    """Parse huge xml files incrementally"""
+    from xml.etree.ElementTree import iterparse
+
+
+    def parse_and_remove(filename, path):
+        path_parts = path.split("/")
+        doc = iterparse(filename, ("start", "end"))
+        # Skip the root element
+        next(doc)
+
+        tag_stack = []
+        elem_stack = []
+        for event, elem in doc:
+            if event == "start":
+                tag_stack.append(elem.tag)
+                elem_stack.append(elem)
+            elif event == "end":
+                if tag_stack == path_parts:
+                    yield elem
+                    elem_stack[-2].remove(elem)
+                try:
+                    tag_stack.pop()
+                    elem_stack.pop()
+                except IndexError:
+                    pass
+
+
+    from collections import Counter
+
+    potholes_by_zips = Counter()
+    data = parse_and_remove("potholes.xml", "row/row")
+    for pothole in data:
+        potholes_by_zips[pothole.findtext("zip")] += 1
+    for zipcode, num in potholes_by_zips.most_common():
+        print(zipcode, num)
+

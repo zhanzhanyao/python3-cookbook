@@ -122,7 +122,6 @@ def parse_huge_xml():
     """Parse huge xml files incrementally"""
     from xml.etree.ElementTree import iterparse
 
-
     def parse_and_remove(filename, path):
         path_parts = path.split("/")
         doc = iterparse(filename, ("start", "end"))
@@ -145,7 +144,6 @@ def parse_huge_xml():
                 except IndexError:
                     pass
 
-
     from collections import Counter
 
     potholes_by_zips = Counter()
@@ -155,3 +153,25 @@ def parse_huge_xml():
     for zipcode, num in potholes_by_zips.most_common():
         print(zipcode, num)
 
+
+def dict_to_xml():
+    """Store the data in a Python dictionary and convert it to XML format"""
+
+    from xml.etree.ElementTree import Element
+
+    def to_xml(tag, d):
+        """Turn a simple dict of key/value pairs into XML"""
+        elem = Element(tag)
+        for key, val in d.items():
+            child = Element(key)
+            child.text = str(val)
+            elem.append(child)
+        return elem
+
+    s = {"name": "GOOG", "shares": 100, "price": 490.1}
+    e = to_xml("stock", s)
+    from xml.etree.ElementTree import tostring
+
+    print(tostring(e))
+    e.set("id", "1234")
+    print(tostring(e))

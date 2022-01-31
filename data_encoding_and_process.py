@@ -175,3 +175,16 @@ def dict_to_xml():
     print(tostring(e))
     e.set("id", "1234")
     print(tostring(e))
+
+def learn_db():
+    """Interact with relational database"""
+    import sqlite3
+    db = sqlite3.connect("database.db")
+    c = db.cursor()
+    c.execute("create table portfolio (symbol text, shares integer, price real)")
+    db.commit()
+    c.executemany("insert into portfolio values (?,?,?)")
+    db.commit()
+
+    for row in db.execute("select * from portfolio"):
+        print(row)

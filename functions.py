@@ -96,3 +96,19 @@ def learn_closure():
     yahoo = urltemplate("http://finance.yahoo.com/d/quotes.csv?s={names}&f={fields}")
     for line in yahoo(names="IBM,AAPL,FB", fields="sl1clv"):
         print(line.decode("utf-8"))
+
+
+def learn_callback():
+    """carry extra state with callback functions"""
+
+    def apply_async(func, args, *, callback):
+        result = func(*args)
+        callback(result)
+
+    def print_result(result):
+        print("Got:", result)
+
+    def add(x, y):
+        return x + y
+
+    apply_async(add, (2, 3), callback=print_result)

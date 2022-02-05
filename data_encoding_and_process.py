@@ -176,9 +176,11 @@ def dict_to_xml():
     e.set("id", "1234")
     print(tostring(e))
 
+
 def learn_db():
     """Interact with relational database"""
     import sqlite3
+
     db = sqlite3.connect("database.db")
     c = db.cursor()
     c.execute("create table portfolio (symbol text, shares integer, price real)")
@@ -188,3 +190,18 @@ def learn_db():
 
     for row in db.execute("select * from portfolio"):
         print(row)
+
+
+# def tup_to_binary():
+# """Write a sequence of tuples to a binary file of structures"""
+# from struct import Struct
+#
+# def write_records(records, format, f):
+#     record_struct = Struct(format)
+#     for r in records:
+#         f.write(record_struct.pack(*r))
+#
+# records = [(1, 2.3, 4.5), (6, 7.8, 9.0), (12, 13.4, 56.7)]
+# with open("data.b","wb") as f:
+#     write_records(records, "<idd",f)
+# 6-11, 6-12 are not easy to learn at this moment, skip them.

@@ -1,4 +1,4 @@
-def learn_args():
+def learn_params():
     """functions that accept any number arguments"""
 
     def avg(first, *rest):
@@ -24,3 +24,18 @@ def learn_args():
     def anyargs(*args, **kwargs):
         print(args)  # ()
         print(kwargs)  # {}
+
+
+def learn_params_1():
+    """functions that only accept keyword arguments"""
+
+    def recv(maxsize, *, block):
+        pass
+
+    recv(1021, block=True)
+
+    def minmum(*value, clip=None):
+        m = min(value)
+        if clip is not None:
+            m = clip if clip > m else m
+            return m

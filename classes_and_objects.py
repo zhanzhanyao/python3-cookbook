@@ -97,3 +97,32 @@ def learn_with():
         pass
         with conn as s2:
             pass
+
+# def learn_slots:
+# save memory when create large number instances
+
+def learn_property():
+    """create managed attributes"""
+    class Person:
+        def __init__(self, first_name):
+            self._first_name = first_name
+
+        @property
+        def first_name(self):
+            return self._first_name
+
+        @first_name.setter
+        def first_name(self, value):
+            if not isinstance(value,str):
+                raise TypeError("Expected a string")
+            self._first_name = value
+
+        @first_name.deleter
+        def first_name(self):
+            raise AttributeError("Can't delete attribute")
+
+    a = Person("Yao")
+    print(a.first_name)
+
+    a.first_name = 12  # TypeError: Expected a string
+    del a.first_name  # AttributeError: Can't delete attribute

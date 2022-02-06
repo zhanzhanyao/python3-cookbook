@@ -117,6 +117,7 @@ def learn_callback():
 # skip 7-10, 7-11 because it's not easy for me to understand at this moment
 def learn_closure1():
     """access and modify the internal variable of closure function"""
+
     def sample():
         n = 0
         # closure function

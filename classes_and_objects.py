@@ -256,4 +256,23 @@ def simp_init():
     s2 = Stock('ACME', 50, price=91.1)
     s3 = Stock('ACME', shares=50, price=91.1)
 
+def learn_abstract_class():
+    """define interface or abstract base class"""
+    from abc import ABCMeta, abstractmethod
+
+    class Istream(metaclass=ABCMeta):
+        @abstractmethod
+        def read(self, maxbytes=-1):
+            pass
+
+        @abstractmethod
+        def write(self, data):
+            pass
+
+    class SocketStream(Istream):
+        def read(self, maxbytes=-1):
+            pass
+
+        def write(self, data):
+            pass
 

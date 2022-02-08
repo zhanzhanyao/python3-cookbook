@@ -200,3 +200,35 @@ def learn_descripter():
     print(c.radius)
     print(c.area)
     print(c.area)
+
+
+def simp_init():
+    """simplify initialization of data structure"""
+    import math
+
+    class Structure1:
+        # class variable that specifies expected fields
+        _fields = []
+
+        def __init__(self, *args):
+            if len(args) != len(self._fields):
+                raise TypeError("Expected {} arguments".format(len(self._fields)))
+            for name, value in zip(self._fields, args):
+                setattr(self, name, value)
+
+    class Stock(Structure1):
+        _fields = ["name", "shares", "price"]
+
+    class Point(Structure1):
+        _fields = ["x", "y"]
+
+    class Circle(Structure1):
+        _fields = ["radius"]
+
+        def area(self):
+            return math.pi * self.radius ** 2
+
+    s = Stock("ACME", 50, 91.1)
+    p = Point(2, 3)
+    c = Circle(4.5)
+    S2 = Stock("ACME", 50)  # TypeError: Expected 3 arguments

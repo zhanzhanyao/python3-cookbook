@@ -98,11 +98,14 @@ def learn_with():
         with conn as s2:
             pass
 
+
 # def learn_slots:
 # save memory when create large number instances
 
+
 def learn_property():
     """create managed attributes"""
+
     class Person:
         def __init__(self, first_name):
             self._first_name = first_name
@@ -113,7 +116,7 @@ def learn_property():
 
         @first_name.setter
         def first_name(self, value):
-            if not isinstance(value,str):
+            if not isinstance(value, str):
                 raise TypeError("Expected a string")
             self._first_name = value
 
@@ -126,3 +129,37 @@ def learn_property():
 
     a.first_name = 12  # TypeError: Expected a string
     del a.first_name  # AttributeError: Can't delete attribute
+
+
+def learn_descripter():
+    """create new kind of class or instance attribute"""
+
+    class Integer:
+        def __init__(self, name):
+            self.name = name
+
+        def __get__(self, instance, cls):
+            if instance is None:
+                return self
+            else:
+                return instance.__dict__[self.name]
+
+        def __set__(self, instance, value):
+            if not isinstance(value, int):
+                raise TypeError("Expected an int")
+            instance.__dict__[self.name] = value
+
+        def __delete__(self, instance):
+            del instance.__dict[self.name]
+
+    class Point:
+        x = Integer("x")
+        y = Integer("y")
+
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+
+    p = Point(2, 3)
+    p.x = 2.5
+    print(p.x)

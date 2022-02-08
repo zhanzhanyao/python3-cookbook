@@ -78,12 +78,3 @@ def convert_timezone():
     central = timezone("US/Central")
     local_d = central.localize(d)  # 2013-03-10 01:45:00-06:00
     utc_d = local_d.astimezone(timezone(pytz.utc))  # 2013-03-10 07:45:00+00:00
-
-
-
-
-
-
-
-
-

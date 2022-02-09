@@ -236,7 +236,7 @@ def simp_init():
     c = Circle(4.5)
     S2 = Stock("ACME", 50)  # TypeError: Expected 3 arguments
 
-    class Structures2():
+    class Structures2:
         _fields = []
 
         def __init__(self, *args, **kwargs):
@@ -255,9 +255,9 @@ def simp_init():
             if kwargs:
                 raise TypeError("Invalid argument(s): {}".format(",".join(kwargs)))
 
-    s1 = Stock('ACME', 50, 91.1)
-    s2 = Stock('ACME', 50, price=91.1)
-    s3 = Stock('ACME', shares=50, price=91.1)
+    s1 = Stock("ACME", 50, 91.1)
+    s2 = Stock("ACME", 50, price=91.1)
+    s3 = Stock("ACME", shares=50, price=91.1)
 
 
 def learn_abstract_class():
@@ -350,10 +350,10 @@ def imple_datamodel():
             self.shares = shares
             self.price = price
 
+
 def learn_abstract_cls():
     """implemente custom containers"""
     import collections
-
 
     class SortedItems(collections.Sequence):
         def __init__(self, initial=None):
@@ -368,7 +368,6 @@ def learn_abstract_cls():
         def add(self, item):
             bisect.insort(self._items, item)
 
-
     items = SortedItems([5, 1, 3])
     print(list(items))
     print(items[2])
@@ -376,3 +375,110 @@ def learn_abstract_cls():
     print(list(items))
 
 
+def learn_state_object():
+    """implements stateful objects or state machines"""
+
+    class Connection:
+        """Bad implementation that has complex code with too much if loops.Low efficiency"""
+
+        def __init__(self):
+            self.state = "CLOSED"
+
+        def read(self):
+            if self.state != "OPEN":
+                raise RuntimeError("Not open")
+            print("reading")
+
+        def write(self, data):
+            if self.state != "OPEN":
+                raise RuntimeError("Not Open")
+            print("writing")
+
+        def open(self):
+            if self.state == "OPEN":
+                raise RuntimeError("Already open")
+            self.state = "OPEN"
+
+        def close(self):
+            if self.state == "CLOSED":
+                raise RuntimeError("Already closed")
+            self.state = "CLOSED"
+
+    class Connection1:
+        def __init__(self):
+            self.new_state(ClosedConnectionState)
+
+        def new_state(self, newstate):
+            self._state = newstate
+
+        def read(self):
+            return self._state.read(self)
+
+        def write(self, data):
+            return self._state.write(self, data)
+
+        def open(self):
+            return self._state.open(self)
+
+        def close(self):
+            return self._state.close(self)
+
+    class ConnectionState:
+        """connection state base class"""
+
+        @staticmethod
+        def read(cnn):
+            raise NotImplementedError()
+
+        @staticmethod
+        def write(cnn, data):
+            raise NotImplementedError()
+
+        @staticmethod
+        def open(cnn):
+            raise NotImplementedError()
+
+        @staticmethod
+        def close(cnn):
+            raise NotImplementedError()
+
+    class ClosedConnectionState(ConnectionState):
+        @staticmethod
+        def read(cnn):
+            raise RuntimeError("Not open")
+
+        @staticmethod
+        def write(cnn, data):
+            raise RuntimeError("Not open")
+
+        @staticmethod
+        def open(cnn):
+            cnn.new_state(OpenConnectionState)
+
+        @staticmethod
+        def close(cnn):
+            raise RuntimeError("Already closed")
+
+    class OpenConnectionState(ConnectionState):
+        @staticmethod
+        def read(cnn):
+            print("reading")
+
+        @staticmethod
+        def write(cnn, data):
+            print("writing")
+
+        @staticmethod
+        def open(cnn):
+            raise RuntimeError("Already open")
+
+        @staticmethod
+        def close(cnn):
+            cnn.new_state(ClosedConnectionState)
+
+    c = Connection1()
+    print(c._state)
+    c.read()
+    c.open()
+    print(c._state)
+    c.open()

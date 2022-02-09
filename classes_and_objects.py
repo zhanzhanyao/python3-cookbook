@@ -1,3 +1,6 @@
+import bisect
+
+
 def instance_repr():
     """change string representation of instances"""
 
@@ -256,6 +259,7 @@ def simp_init():
     s2 = Stock('ACME', 50, price=91.1)
     s3 = Stock('ACME', shares=50, price=91.1)
 
+
 def learn_abstract_class():
     """define interface or abstract base class"""
     from abc import ABCMeta, abstractmethod
@@ -279,6 +283,7 @@ def learn_abstract_class():
 
 def imple_datamodel():
     """implementing data model or type system"""
+
     class Descriptor:
         # Base class. uses a descriptor to set a value
         def __init__(self, name=None, **opts):
@@ -288,7 +293,6 @@ def imple_datamodel():
 
         def __set__(self, instance, value):
             instance.__dict_[self.name] = value
-
 
     # Descriptor for enforcing types
     class Typed(Descriptor):
@@ -345,3 +349,30 @@ def imple_datamodel():
             self.name = name
             self.shares = shares
             self.price = price
+
+def learn_abstract_cls():
+    """implemente custom containers"""
+    import collections
+
+
+    class SortedItems(collections.Sequence):
+        def __init__(self, initial=None):
+            self._items = sorted(initial) if initial is not None else []
+
+        def __getitem__(self, index):
+            return self._items[index]
+
+        def __len__(self):
+            return len(self._items)
+
+        def add(self, item):
+            bisect.insort(self._items, item)
+
+
+    items = SortedItems([5, 1, 3])
+    print(list(items))
+    print(items[2])
+    items.add(2)
+    print(list(items))
+
+

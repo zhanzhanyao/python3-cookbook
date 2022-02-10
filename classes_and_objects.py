@@ -556,4 +556,5 @@ def learn_visit_pattern():
     e = Evaluator()
     print(e.visit(t4))
 
+
 # skip the rest sections because it's difficult

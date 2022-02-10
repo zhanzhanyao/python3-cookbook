@@ -2,7 +2,7 @@
 在BS架构下，客户端只需要浏览器，应用程序的逻辑和数据都存储在服务器端。
 浏览器只需要请求服务器，获取Web页面，并把Web页面展示给用户即可。
 
-## HTTP协议  
+## 1. HTTP协议  
 
 在web应用中，服务器将网页的HTML代码发送给浏览器，由浏览器显示。
 服务器与浏览器之间的传输协议是HTTP.
@@ -13,7 +13,7 @@
 包括：响应代码，响应类型，Header，Body
 - 若浏览器还需继续向服务器请求其他资源，就再次发出请求
 
-## WSGI接口
+## 2. WSGI接口
 Web Server Gateway Interface
 
         # 符合WSGI标准的一个HTTP处理函数，处理http请求
@@ -30,3 +30,55 @@ Web Server Gateway Interface
         print('Serving HTTP on port 8000...')
         # 开始监听HTTP请求:
         httpd.serve_forever()
+
+## 3. 使用web框架  
+Web App，就是写一个WSGI的处理函数，针对每个HTTP请求进行响应。
+在WSGI的上进一步抽象，专注于用一个函数处理一个URL。
+URL到函数的映射由Web框架完成。
+
+### 流行的web框架--Flask
+
+        pip install flask
+
+        # app.py
+        from flask import Flask
+        from flask import request
+        
+        app = Flask(__name__)
+        
+        
+        @app.route("/", methods=["GET", "POST"])
+        def home():
+            return "<h1>home</h1>"
+        
+        
+        @app.route("/signin", methods=["GET"])
+        def signin_form():
+            return """<form action="/signin" method="post">
+                      <p><input name="username"></p>
+                      <p><input name="password" type="password"></p>
+                      <p><button type="submit">Sign In</button></p>
+                      </form>"""
+        
+        
+        @app.route("/signin", methods=["POST"])
+        def signin():
+            if request.form["username"] == "admin" and request.form["password"] == "password":
+                return "<h3>Hello, admin!</h3>"
+        
+        if __name__ == "__main__":
+            app.run()
+
+        # http://localhost:5000        
+        # http://localhost:5000/signin
+
+### Python web框架
+- Django: 全能型web框架
+- web.py: 小巧的Web框架
+- Bottle: 类似Flask
+- Rornado: Facebook的开源异步Web框架   
+
+有了Web框架，我们在编写Web应用时，注意力就从WSGI处理函数转移到URL+对应的处理函数。
+  
+## 4. 使用模板
+MVC：Model-View-Controller

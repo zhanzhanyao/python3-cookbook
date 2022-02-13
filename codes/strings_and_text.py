@@ -28,7 +28,9 @@ def match_string():
 
     import os
 
-    filenames = os.listdir("..")  # [ 'Makefile', 'foo.c', 'bar.py', 'spam.c', 'spam.h' ]
+    filenames = os.listdir(
+        ".."
+    )  # [ 'Makefile', 'foo.c', 'bar.py', 'spam.c', 'spam.h' ]
     targetfile = [
         name for name in filenames if name.endswith((".c", ".h"))
     ]  # ['foo.c', 'spam.c', 'spam.h'

@@ -31,3 +31,79 @@ def parse_cmd():
     print(args.verbose)
     print(args.outfile)
     print(args.speed)
+
+
+def prompt_password():
+    import getpass
+
+    # user = input('Enter your username: ')
+    user = getpass.getuser()
+    passwd = getpass.getpass()
+
+    def svc_login():
+        # function to handle password
+        pass
+
+    if svc_login(user, passwd):
+        print("Yay!")
+    else:
+        print("Boo!")
+
+
+def learn_log():
+    import logging
+
+    log = logging.getLogger(__name__)
+    log.addHandler(logging.NullHandler)
+
+    def func():
+        log.critical("A Critical Error")
+        log.debug("A debug message")
+
+
+def learn_timer():
+    import time
+
+    class Timer:
+        def __init__(self, func=time.perf_counter):
+            self.elapsed = 0.0
+            self._func = func
+            self._start = None
+
+        def start(self):
+            if self._start is not None:
+                raise RuntimeError("Already started")
+            self._start = self._func()
+
+        def stop(self):
+            if self._start is None:
+                raise RuntimeError("Not started")
+            end = self._func()
+            self.elapsed += end - self._start
+            self._start = None
+
+        def reset(self):
+            self.elapsed = 0.0
+
+        @property
+        def running(self):
+            return self._start is not None
+
+        def __enter__(self):
+            self.start()
+            return self
+
+        def __exit__(self, *args):
+            self.stop()
+
+    def countdown(n):
+        while n > 0:
+            n -= 1
+
+    # Explicit start/stop
+    t = Timer()
+    t.start()
+    countdown(100000)
+    t.stop()
+    print(t.elapsed)
+

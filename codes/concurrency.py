@@ -43,6 +43,7 @@ def learn_thread():
     c.terminate()
     t.join()
     import socket
+
     class IOTask:
         def terminate(self):
             self._runing = False

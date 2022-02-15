@@ -26,3 +26,44 @@
 同时迭代多个集合
 
 ### 7. instance()
+
+## File and IO
+
+### 1. with open("somefile") as f:
+    with open('somefile.txt', 'rt', encoding='latin-1') as f:
+            pass
+
+### 2. print("xxx", seq="", end="")
+
+### 3. io.StringIO
+将字符串创建为类文件对象
+
+    s = io.StringIO()
+    s.write('Hello World\n')
+    s.getvalue()
+
+## 4. qzip bz2模块
+读写压缩文件  
+
+    import gzip
+    with gzip.open('somefile.gz', 'rt') as f:
+        text = f.read()
+
+## 5. functools.partial()
+一次读取固定大小数据块
+
+    from functools import partial
+    RECORD_SIZE = 32
+    with open('somefile.data', 'rb') as f:
+        records = iter(partial(f.read, RECORD_SIZE), b'')
+        for r in records:
+            ...
+
+## 6. os模块
+
+
+## 7. io模块
+
+## 8. sys模块
+
+## 9. pickle模块

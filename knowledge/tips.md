@@ -14,7 +14,7 @@ assert
 SQL distinct
 Linux常用命令
 python2与python3的区别
-内置函数sorted，filter
+内置函数sorted()，filter()
 collections的方法
 删除文件操作
 数据库基本方法及优化查询（外键，索引，联合查询，选择特定字段）
@@ -28,13 +28,13 @@ myaql和redis的区别
 类的各种方法 魔法方法， 单例模式
 round()的用法以及%0.03f
 http状态码
-zip(), 
+
 cookie和session
 多进程，多线程
 any(), all()
 python中什么元素为假
 sort(), sorted()
-lamda结合sort等
+lamda结合sorted等
 递归
 json和python字典转化
 文件打开模式
